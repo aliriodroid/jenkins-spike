@@ -1,0 +1,27 @@
+# Dockerfile.dotnet-build
+FROM mcr.microsoft.com/dotnet/sdk:6.0
+
+# Instalar herramientas adicionales
+RUN apt-get update && apt-get install -y \
+    git \
+    wget \
+    curl
+
+# Configurar variables de entorno
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
+ENV DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+
+# Directorio de trabajo
+WORKDIR /app
+
+# Copiar archivos del proyecto
+COPY . .
+
+# Restaurar dependencias
+RUN dotnet restore
+
+# Compilar el proyecto
+RUN dotnet build -c Release
+
+# Ejecutar tests
+RUN dotnet test
