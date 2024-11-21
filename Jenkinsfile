@@ -16,25 +16,25 @@ pipeline {
         
         stage('Restore') {
             steps {
-                sh "dotnet restore ${PROJECT_PATH}"
+                sh "dotnetRestore ${PROJECT_PATH}"
             }
         }
         
         stage('Build') {
             steps {
-                sh "dotnet build ${PROJECT_PATH} -c Release"
+                sh "dotnetBuild ${PROJECT_PATH} -c Release"
             }
         }
         
         stage('Test') {
             steps {
-                sh "dotnet test ${TEST_PATH}"
+                sh "dotnetTest ${TEST_PATH}"
             }
         }
         
         stage('Publish') {
             steps {
-                sh "dotnet publish ${PROJECT_PATH} -c Release -o ./publish"
+                sh "dotnetPublish ${PROJECT_PATH} -c Release -o ./publish"
             }
         }
     }
